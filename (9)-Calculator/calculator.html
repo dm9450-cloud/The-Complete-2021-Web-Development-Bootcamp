@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Calculator</title>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=0.35">
+
+    <link rel="icon" href="calci.jpg" type="image/gif">
+    <link rel="stylesheet" href="calculator.css">
+</head>
+
+<body>
+
+    <u style="color: black;">
+		<img src="logo.jpg" alt="logo" style="width: 160px; height: 140px; float: left;">
+		<header>CALCULATOR
+		<div style="width: 160px; height: 140px; float: right; opacity: 0; text-align: center; font-size: 38px;">ANKIT S.</div>
+	</header></u>
+
+    <hr>
+
+    <div class="calcon">
+
+        <div class="operators">
+
+            <textarea name="output" id="output" readonly="" placeholder="RESULT" wrap="soft" style="overflow:auto; resize:none; "></textarea>
+
+            <!--<input type="text" name="output" id="output" readonly="" placeholder="RESULT" >-->
+
+            <table id="func" style="float: left; margin-right: 5px; display: block; ">
+                <tr>
+                    <td><button id="op2">π</button></td>
+                    <td><button id="op2">x²</button></td>
+                    <td><button id="op2">√</button></td>
+                </tr>
+                <tr>
+                    <td><button>Sin</button></td>
+                    <td><button>Cos</button></td>
+                    <td><button>Tan</button></td>
+                </tr>
+                <tr>
+                    <td><button>log</button></td>
+                    <td><button>exp</button></td>
+                    <td><button>ln</button></td>
+                </tr>
+                <tr>
+                    <td><button id="op2">x³</button></td>
+                    <td><button>e</button></td>
+                    <td><button>x!</button></td>
+                </tr>
+                <tr>
+                    <td><button id="op2">(</button></td>
+                    <td><button disabled></button></td>
+                    <td><button id="op2">)</button></td>
+                </tr>
+
+            </table>
+
+            <table>
+                <tr>
+                    <td><button id="C">C</button></td>
+                    <td><button id="op1">⌫</button></td>
+                    <td><button id="op1">%</button></td>
+                    <td><button id="op1">/</button></td>
+                </tr>
+                <tr>
+                    <td><button>7</button></td>
+                    <td><button>8</button></td>
+                    <td><button>9</button></td>
+                    <td><button id="op1">*</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td><button>4</button></td>
+                    <td><button>5</button></td>
+                    <td><button>6</button></td>
+                    <td><button id="op1">-</button></td>
+                </tr>
+                <tr>
+                    <td><button>1</button></td>
+                    <td><button>2</button></td>
+                    <td><button>3</button></td>
+                    <td><button id="op1">+</button></td>
+                </tr>
+                <tr>
+                    <td><button id="expand" onclick="fun()">☰</button></td>
+                    <td><button>0</button></td>
+                    <td><button>.</button></td>
+                    <td><button id="eq">=</button></td>
+                </tr>
+            </table>
+
+        </div>
+
+        <details>
+            <summary id="hist">HISTORY</summary>
+            <p id="reset" onclick="reset()" style="font-size: 46px; margin-left: 35px; margin-right: 35px;">Reset</p>
+            <textarea name="history" id="history" readonly="" placeholder="History Log" wrap="soft"></textarea>
+
+        </details>
+
+    </div>
+
+    <hr>
+
+
+    <!--<footer>
+			<p><u>Web Development Project</u></p>
+			<p>- <u>Smartknower</u></p>
+			<p><u>Topic</u> : Math Application Using <em>JAVASCRIPT</em></p>
+		</footer>-->
+
+
+
+    <script type="text/javascript">
+        let screen = document.getElementById('output');
+        buttons = document.querySelectorAll('button');
+        outscr = '';
+
+        let history = document.getElementById("history");
+        historydata = '';
+
+        for (item of buttons) {
+            item.addEventListener('click', (e) => {
+                bt = e.target.innerText;
+                console.log('You have selected : ', bt);
+
+                let varlen = outscr.length;
+
+                if (bt == 'C') {
+                    outscr = '';
+                    screen.value = outscr;
+                } else if (bt == '=') {
+                    screen.value = eval(outscr);
+                    console.log('ANSWER IS :         ', screen.value);
+                    history.value += historydata + " = " + screen.value + "\r\n";
+                    outscr = ' ';
+                } else if (bt == '⌫') {
+                    outscr = outscr.slice(0, varlen - 1);
+                    screen.value = outscr;
+                } else if (bt == '√') {
+                    let num = outscr;
+                    outscr = Math.sqrt(num);
+                    screen.value = outscr;
+                    console.log('ANSWER IS :         ', screen.value);
+                    history.value += "sqrt " + historydata + " = " + screen.value + "\r\n";
+                    outscr = ' ';
+                } else if (bt == 'x²') {
+                    let num = outscr;
+                    outscr = Math.pow(num, 2);
+                    screen.value = outscr;
+                    console.log('ANSWER IS :         ', screen.value);
+                    history.value += "x² " + historydata + " = " + screen.value + "\r\n";
+                    outscr = ' ';
+                } else if (bt == 'x³') {
+                    let num = outscr;
+                    outscr = Math.pow(num, 3);
+                    screen.value = outscr;
+                    console.log('ANSWER IS :         ', screen.value);
+                    history.value += "x³ " + historydata + " = " + screen.value + "\r\n";
+                    outscr = ' ';
+                } else if (bt == 'π') {
+                    outscr += Math.PI.toFixed(5);
+                    screen.value = outscr;
+                } else if (bt == 'e') {
+                    outscr += Math.E.toFixed(5);
+                    screen.value = outscr;
+                } else if (bt == 'exp') {
+                    let num = outscr;
+                    outscr = Math.exp(num).toFixed(5);
+                    screen.value = outscr;
+                    history.value += "exp " + historydata + " = " + screen.value + "\r\n";
+                    outscr = ' ';
+                } else if (bt == 'log') {
+                    let num = outscr;
+                    outscr = Math.log10(num).toFixed(5);
+                    screen.value = outscr;
+                    history.value += "log " + historydata + " = " + screen.value + "\r\n";
+                    outscr = ' ';
+                } else if (bt == 'ln') {
+                    let num = outscr;
+                    outscr = Math.log(num).toFixed(5);
+                    screen.value = outscr;
+                    history.value += "ln " + historydata + " = " + screen.value + "\r\n";
+                    outscr = ' ';
+                } else if (bt == 'x!') {
+                    let num = outscr;
+                    var ans = 1;
+
+                    for (var i = 2; i <= num; i++)
+                        ans = ans * i;
+                    outscr = ans;
+                    screen.value = outscr;
+                    history.value += "x! " + historydata + " = " + screen.value + "\r\n";
+                    outscr = ' ';
+                } else if (bt == 'Sin') {
+                    let num = outscr;
+                    outscr = Math.sin(num).toFixed(5);
+                    screen.value = outscr;
+                    history.value += "Sin " + historydata + " = " + screen.value + "\r\n";
+                    outscr = ' ';
+                } else if (bt == 'Cos') {
+                    let num = outscr;
+                    outscr = Math.cos(num).toFixed(5);
+                    screen.value = outscr;
+                    history.value += "Cos " + historydata + " = " + screen.value + "\r\n";
+                    outscr = ' ';
+                } else if (bt == 'Tan') {
+                    let num = outscr;
+                    outscr = Math.tan(num).toFixed(5);
+                    screen.value = outscr;
+                    history.value += "Tan " + historydata + " = " + screen.value + "\r\n";
+                    outscr = ' ';
+                } else if (bt == '☰') {} else {
+                    outscr += bt;
+                    screen.value = outscr;
+                    historydata = outscr;
+                }
+
+
+            })
+
+            function fun() {
+                if (document.getElementById("func").style.display === "none") {
+                    document.getElementById("func").style.display = "block";
+                } else {
+                    document.getElementById("func").style.display = "none";
+                }
+            }
+
+            function reset() {
+                document.getElementById("history").value = '';
+            }
+        }
+    </script>
+</body>
+
+</html>
